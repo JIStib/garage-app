@@ -1,0 +1,1 @@
+rah tsy manana anle image1 (le ao am ./api/Dockerfile), mila eoeo am 40mn eo ny manao anle build anle izy, fa tsy aiko am pc hafa (le grpc ela be), na rah te hiverina hitelecharge anle images rehetra -> build.bat, rah le image1 iany de -> docker compose build --no-cache api -> docker compose up

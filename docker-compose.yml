@@ -1,0 +1,45 @@
+services:
+  api:
+    build: ./api
+    container_name: garage_app_api
+    volumes:
+      - ./api:/var/www/html
+    ports:
+      - "8000:80"
+    depends_on:
+      - db
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: app_db
+      DB_USERNAME: app_user
+      DB_PASSWORD: app_pass
+    command: >
+      bash -c "
+      php artisan migrate --force &&
+      php artisan db:seed --force &&
+      apache2-foreground
+      "
+
+  web:
+    build: ./web
+    container_name: garage_app_web
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      CHOKIDAR_INTERVAL: 100
+
+  db:
+    image: postgres:15
+    container_name: garage_app_postgres_db
+    environment:
+      POSTGRES_DB: app_db
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: app_pass
+    ports:
+      - "5432:5432"

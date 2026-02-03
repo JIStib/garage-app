@@ -1,0 +1,144 @@
+todo appli web : 
+    - laravel web service (backend) + reactjs interface web (frontend) + postgres
+    - le tout dans un environnement
+
+a faire :
+    - 1 mettre en place et creer le projet :
+        - creer le projet api/backend :
+            - creer le projet avec composer create-project laravel/laravel api
+            - creer et configurer le dockerfile :
+                - php apache :
+                    - pdo postgres
+                    - extension grpc pour php
+                - composer :
+                    - kreait/laravel-firebase
+                    - google/cloud-firestore
+        - creer le projet web/frontend :
+            # - creer le projet avec npm create vite@latest
+            - se baser sur un project template react deja existant : TailAdmin
+            - creer et configurer le dockerfile :
+                - nodejs :
+                    - dependances via npm :
+                        - axios react-router-dom prop-types
+                        - tanstack/react-query
+        - englober le project api/backend et le le projet web/frontend dans un seul dossier/project :
+            - creer et configurer le fichier docker-compose.yml :
+                - service api/backend
+                - service web/frontend
+                - service bdd postgres
+
+    - 2 :
+        - categorie : appli web / bdd
+        - module :
+        - page :
+        - description : 
+            - creer la structure de la bdd postgres : tables, relations entre les tables, pour pouvoir commencer, modifications certainement possibles a venir/plus tard
+        - type : appli web / bdd
+        - qui : 
+        - estimation : 45
+        - temps passé : 45
+        - reste a faire : 0
+        - avancement : 100
+
+    - 3 :
+        - categorie : appli web / api
+        - module :
+        - page :
+        - description : 
+            - faire communiquer l'api et la base postgresn, le .env de api, les differents services api et bdd postgres dans l'environnement docker
+        - type : appli web / api
+        - qui : 
+        - estimation : 15
+        - temps passé : 15
+        - reste a faire : 0
+        - avancement : 100
+
+    - 4 :
+        - categorie : appli web / api
+        - module :
+        - page :
+        - description : 
+            - creer les migrations pour inserer les tables, et mettre en place relations entre les tables, pour pouvoir commencer, modifications certainement possibles a venir/plus tard
+        - type : appli web / api
+        - qui : 
+        - estimation : 15
+        - temps passé : 15
+        - reste a faire : 0
+        - avancement : 100
+
+    - 5 :
+        - categorie : appli web / api
+        - module :
+        - page :
+        - description :
+            - creer les models pour chacune des tables, et mettre en place relations entre les models, pour pouvoir commencer, modifications certainement possibles a venir/plus tard
+        - type : appli web / api
+        - qui : 
+        - estimation : 30
+        - temps passé : 30
+        - reste a faire : 0
+        - avancement : 100
+
+    - 6 : 
+        - categorie : appli web / api
+        - module :
+        - page :
+        - description :
+            - creer le controller pour les types de reparation modifications certainement possibles a venir/plus tard
+        - type : appli web / api
+        - qui : 
+        - estimation : 30
+        - temps passé : 30
+        - reste a faire : 0
+        - avancement : 100
+
+    - 7 : 
+        - categorie : appli web / web
+        - module :
+        - page :
+        - description :
+            - faire communiquer l'api(bakend) et le web(frontend), les differents services api et web dans l'environnement docker
+        - type : appli web / web
+        - qui : 
+        - estimation : 15
+        - temps passé : 15
+        - reste a faire : 0
+        - avancement : 100
+
+    - 8 : 
+        - categorie : appli web / web
+        - module :
+        - page :
+        - description :
+            - creer le service api pour faire les requettes avec axios
+        - type : appli web / web
+        - qui : 
+        - estimation : 20
+        - temps passé : 20
+        - reste a faire : 0
+        - avancement : 100
+
+    - 7 : 
+        - categorie : appli web / web
+        - module :
+        - page :
+        - description :
+            - creer le service pour les types de reparation qui permet de gerer les types de reparation
+        - type : appli web / web
+        - qui : 
+        - estimation : 20
+        - temps passé : 20
+        - reste a faire : 0
+        - avancement : 100
+    - 7 : 
+        - categorie : appli web / web
+        - module :
+        - page :
+        - description :
+            - creer la page pour les types de reparation qui permet de gerer les types de reparation
+        - type : appli web / web
+        - qui : 
+        - estimation : 30
+        - temps passé : 30
+        - reste a faire : 0
+        - avancement : 100
