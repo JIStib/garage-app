@@ -107,19 +107,6 @@ Route::get('/add-reparation', function () {
                 ]
             ],
             [
-                "id" => 2,
-                "id_reparation" => $newDocRef->id(),
-                "id_type_reparation" => 2,
-                "est_termine" => false,
-                "prix" => 100.00,
-                "type_reparation" => [
-                    "id" => 2,
-                    "nom" => "Vidange",
-                    "duree" => 5,
-                    "prix" => 100.00
-                ]
-            ],
-            [
                 "id" => 3,
                 "id_reparation" => $newDocRef->id(),
                 "id_type_reparation" => 3,

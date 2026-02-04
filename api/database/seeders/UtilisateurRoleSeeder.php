@@ -14,10 +14,10 @@ class UtilisateurRoleSeeder extends Seeder
     public function run(): void
     {
         UtilisateurRole::create([
-            'nom' => 'admin'
+            'nom' => 'Admin'
         ]);
         UtilisateurRole::create([
-            'nom' => 'client'
+            'nom' => 'Client'
         ]);
     }
 }

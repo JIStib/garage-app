@@ -87,6 +87,7 @@ export default function ReparationList() {
                             <button
                                 disabled={syncMutation.isPending}
                                 onClick={handleSync}
+                                // className="inline-flex items-center rounded-md bg-brand-500 px-4 py-2 text-white disabled:opacity-60"
                                 className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-brand-500 disabled:bg-brand-400 rounded-lg hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
                             >
                                 {syncMutation.isPending ?
@@ -112,7 +113,7 @@ export default function ReparationList() {
                         </div>
                     ) : reparations.length === 0 ? (
                         <div className="py-12 text-center text-gray-500 dark:text-gray-400">
-                            Aucune réparation trouvée
+                            Aucune réparation trouvée, essayez de faire une synchronisation.
                         </div>
                     ) : (
                         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">

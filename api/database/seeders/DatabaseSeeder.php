@@ -35,7 +35,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            ReparationSeeder::class,
+            ReparationStatutSeeder::class,
         ]);
+
+        // $this->call([
+        //     ReparationSeeder::class,
+        // ]);
     }
 }

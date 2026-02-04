@@ -26,7 +26,7 @@ export default function UtilisateurAuthLayout({
                 />
               </Link>
               <p className="text-center text-gray-400 dark:text-white/60">
-                Garage app Dashboard
+                Garage app Backoffice
               </p>
             </div>
           </div>

@@ -71,4 +71,36 @@ class UtilisateurController extends Controller
 
         return response()->noContent();
     }
+
+    public function login(Request $request)
+    {
+        $validated = $request->validate([
+            'identifiant' => 'required|string|max:255',
+            'mdp' => 'required|string|max:255',
+        ]);
+
+        $utilisateur = Utilisateur::with('role')
+            ->where('identifiant', $validated['identifiant'])
+            ->first();
+
+        if (!$utilisateur) {
+            return response()->json(['message' => 'Utilisateur non trouvé!'], 404);
+        }
+
+        if ($validated['mdp'] === $utilisateur->mdp) {
+            return response()->json($utilisateur);
+        }
+
+        // if (Hash::check($validated['mdp'], $utilisateur->mdp)) {
+        //     return response()->json($utilisateur);
+        // }
+
+        return response()->json(['message' => 'Mot-de-passe incorrect!'], 401);
+    }
+
+    public function signin(Request $request)
+    {
+        $this->store(request());
+    }
+
 }

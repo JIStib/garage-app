@@ -21,6 +21,13 @@ import Home from "./pages/Dashboard/Home";
 import TypeReparationList from "./pages/TypesReparationPages/TypeReparationList";
 import ReparationList from "./pages/ReparationsPages/ReparationList";
 import ReparationDetails from "./pages/ReparationsPages/ReparationDetails";
+import UtilisateurSignIn from "./pages/UtilisateursPages/UtilisateurSignIn";
+import UtilisateurSignUp from "./pages/UtilisateursPages/UtilisateurSignUp";
+import Accueil from "./pages/Accueil/Accueil";
+import InterventionsStats from "./pages/StatistiquesPages/InterventionsStatsMontants";
+import ClientsStats from "./pages/StatistiquesPages/ClientsStats";
+import InterventionsStatsMontants from "./pages/StatistiquesPages/InterventionsStatsMontants";
+import InterventionsStatsGraphique from "./pages/StatistiquesPages/InterventionsStatsGraphique";
 
 export default function App() {
   return (
@@ -30,7 +37,7 @@ export default function App() {
         <Routes>
           {/* Dashboard Layout */}
           <Route element={<AppLayout />}>
-            <Route index path="/" element={<Home />} />
+            <Route index path="/accueil" element={<Accueil />} />
 
             {/* Others Page */}
             <Route path="/profile" element={<UserProfiles />} />
@@ -63,11 +70,24 @@ export default function App() {
 
             {/* reparations details */}
             <Route path="/reparations/:id" element={<ReparationDetails />} />
+
+            {/* Statistiques */}
+            {/* <Route path="/interventions-stats" element={<InterventionsStats />} />
+            <Route path="/clients-stats" element={<ClientsStats />} /> */}
+
+            {/* Statistiques */}
+            <Route path="/interventions-montants" element={<InterventionsStatsMontants />} />
+            <Route path="/interventions-graphique" element={<InterventionsStatsGraphique />} />
           </Route>
 
           {/* Auth Layout */}
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+
+          {/* utilisateur */}
+          <Route path="/" element={<UtilisateurSignIn />} />
+          <Route path="/connexion" element={<UtilisateurSignIn />} />
+          <Route path="/inscription" element={<UtilisateurSignUp />} />
 
           {/* Fallback Route */}
           <Route path="*" element={<NotFound />} />

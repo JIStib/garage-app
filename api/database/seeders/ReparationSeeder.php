@@ -16,33 +16,6 @@ class ReparationSeeder extends Seeder
      */
     public function run(): void
     {
-
-        // statuts reparation
-
-        ReparationStatut::create(
-            [
-                'nom' => 'Créé'
-            ]
-        );
-
-        ReparationStatut::create(
-            [
-                'nom' => 'En cours'
-            ]
-        );
-
-        ReparationStatut::create(
-            [
-                'nom' => 'Terminé'
-            ]
-        );
-
-        ReparationStatut::create(
-            [
-                'nom' => 'Payé'
-            ]
-        );
-
         // reparation 1
 
         Reparation::create([

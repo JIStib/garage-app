@@ -1,0 +1,136 @@
+{
+  "hash": "ae24cb81",
+  "configHash": "0eee6faa",
+  "lockfileHash": "82c7b757",
+  "browserHash": "e7be1670",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "c893b9a7",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "5a3d3840",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "7240df35",
+      "needsInterop": true
+    },
+    "@tanstack/react-query": {
+      "src": "../../node_modules/@tanstack/react-query/build/modern/index.js",
+      "file": "@tanstack_react-query.js",
+      "fileHash": "b4815b59",
+      "needsInterop": false
+    },
+    "react-router": {
+      "src": "../../node_modules/react-router/dist/development/index.mjs",
+      "file": "react-router.js",
+      "fileHash": "e33d515e",
+      "needsInterop": false
+    },
+    "react-helmet-async": {
+      "src": "../../node_modules/react-helmet-async/lib/index.esm.js",
+      "file": "react-helmet-async.js",
+      "fileHash": "552ea7ab",
+      "needsInterop": false
+    },
+    "@fullcalendar/react": {
+      "src": "../../node_modules/@fullcalendar/react/dist/index.js",
+      "file": "@fullcalendar_react.js",
+      "fileHash": "ac6b6f5f",
+      "needsInterop": false
+    },
+    "@fullcalendar/daygrid": {
+      "src": "../../node_modules/@fullcalendar/daygrid/index.js",
+      "file": "@fullcalendar_daygrid.js",
+      "fileHash": "709b456b",
+      "needsInterop": false
+    },
+    "@fullcalendar/timegrid": {
+      "src": "../../node_modules/@fullcalendar/timegrid/index.js",
+      "file": "@fullcalendar_timegrid.js",
+      "fileHash": "9478b10c",
+      "needsInterop": false
+    },
+    "@fullcalendar/interaction": {
+      "src": "../../node_modules/@fullcalendar/interaction/index.js",
+      "file": "@fullcalendar_interaction.js",
+      "fileHash": "8e700fbf",
+      "needsInterop": false
+    },
+    "react-apexcharts": {
+      "src": "../../node_modules/react-apexcharts/dist/react-apexcharts.min.js",
+      "file": "react-apexcharts.js",
+      "fileHash": "50036309",
+      "needsInterop": true
+    },
+    "flatpickr": {
+      "src": "../../node_modules/flatpickr/dist/esm/index.js",
+      "file": "flatpickr.js",
+      "fileHash": "47af696c",
+      "needsInterop": false
+    },
+    "react-dropzone": {
+      "src": "../../node_modules/react-dropzone/dist/es/index.js",
+      "file": "react-dropzone.js",
+      "fileHash": "26984866",
+      "needsInterop": false
+    },
+    "tailwind-merge": {
+      "src": "../../node_modules/tailwind-merge/dist/bundle-mjs.mjs",
+      "file": "tailwind-merge.js",
+      "fileHash": "cbf57b24",
+      "needsInterop": false
+    },
+    "clsx": {
+      "src": "../../node_modules/clsx/dist/clsx.mjs",
+      "file": "clsx.js",
+      "fileHash": "bcd9d303",
+      "needsInterop": false
+    },
+    "@react-jvectormap/core": {
+      "src": "../../node_modules/@react-jvectormap/core/dist/index.js",
+      "file": "@react-jvectormap_core.js",
+      "fileHash": "6f16e9d3",
+      "needsInterop": true
+    },
+    "@react-jvectormap/world": {
+      "src": "../../node_modules/@react-jvectormap/world/dist/index.js",
+      "file": "@react-jvectormap_world.js",
+      "fileHash": "d8b5789e",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "28aeac94",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-CHO7U44Y": {
+      "file": "chunk-CHO7U44Y.js"
+    },
+    "chunk-D5I3RLC3": {
+      "file": "chunk-D5I3RLC3.js"
+    },
+    "chunk-XXR5GDEA": {
+      "file": "chunk-XXR5GDEA.js"
+    },
+    "chunk-LIIDYO6S": {
+      "file": "chunk-LIIDYO6S.js"
+    },
+    "chunk-MXDPTFRY": {
+      "file": "chunk-MXDPTFRY.js"
+    },
+    "chunk-4B2QHNJT": {
+      "file": "chunk-4B2QHNJT.js"
+    }
+  }
+}

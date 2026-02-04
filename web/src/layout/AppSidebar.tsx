@@ -3,23 +3,14 @@ import { Link, useLocation } from "react-router";
 
 // Assume these icons are imported from an icon library
 import {
-  BoxCubeIcon,
-  CalenderIcon,
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
   ListIcon,
-  PageIcon,
   PieChartIcon,
   PlugInIcon,
-  TableIcon,
-  UserCircleIcon,
-  PaperPlaneIcon,
-  DollarLineIcon,
-  TimeIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
-import SidebarWidget from "./SidebarWidget";
 
 type NavItem = {
   name: string;
@@ -28,63 +19,11 @@ type NavItem = {
   subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
 };
 
-// const navItems: NavItem[] = [
-//   {
-//     icon: <GridIcon />,
-//     name: "Dashboard",
-//     subItems: [{ name: "Ecommerce", path: "/", pro: false }],
-//   },
-//   {
-//     icon: <CalenderIcon />,
-//     name: "Calendar",
-//     path: "/calendar",
-//   },
-//   {
-//     icon: <UserCircleIcon />,
-//     name: "User Profile",
-//     path: "/profile",
-//   },
-//   {
-//     name: "Forms",
-//     icon: <ListIcon />,
-//     subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
-//   },
-//   {
-//     name: "Tables",
-//     icon: <TableIcon />,
-//     subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
-//   },
-//   {
-//     name: "Pages",
-//     icon: <PageIcon />,
-//     subItems: [
-//       { name: "Blank Page", path: "/blank", pro: false },
-//       { name: "404 Error", path: "/error-404", pro: false },
-//     ],
-//   },
-// ];
-
 const gestionItems: NavItem[] = [
-  // {
-  //   icon: <GridIcon />,
-  //   name: "Dashboard",
-  //   subItems: [{ name: "Ecommerce", path: "/", pro: false }, { name: "test", path: "/form-elements", pro: false }],
-  // },
-  // {
-  //   icon: <CalenderIcon />,
-  //   name: "Calendar",
-  //   path: "/calendar",
-  // },
-  // {
-  //   icon: <UserCircleIcon />,
-  //   name: "User Profile",
-  //   path: "/profile",
-  // },
-  // { 
   {
     name: "Accueil",
     icon: <GridIcon />,
-    path: "/"
+    path: "/accueil"
   },
   {
     name: "Types de réparation",
@@ -100,76 +39,25 @@ const gestionItems: NavItem[] = [
     // path: "/form-elements"
     path: "/reparations"
   },
-  // {
-  //   name: "Pages",
-  //   icon: <PageIcon />,
-  //   subItems: [
-  //     { name: "Blank Page", path: "/blank", pro: false },
-  //     { name: "404 Error", path: "/error-404", pro: false },
-  //   ],
-  // },
 ];
-
-// const statistiquesItems: NavItem[] = [
-//   {
-//     icon: <PieChartIcon />,
-//     name: "Charts",
-//     subItems: [
-//       { name: "Line Chart", path: "/line-chart", pro: false },
-//       { name: "Bar Chart", path: "/bar-chart", pro: false },
-//     ],
-//   },
-//   {
-//     icon: <BoxCubeIcon />,
-//     name: "UI Elements",
-//     subItems: [
-//       { name: "Alerts", path: "/alerts", pro: false },
-//       { name: "Avatar", path: "/avatars", pro: false },
-//       { name: "Badge", path: "/badge", pro: false },
-//       { name: "Buttons", path: "/buttons", pro: false },
-//       { name: "Images", path: "/images", pro: false },
-//       { name: "Videos", path: "/videos", pro: false },
-//     ],
-//   },
-//   {
-//     icon: <PlugInIcon />,
-//     name: "Authentication",
-//     subItems: [
-//       { name: "Sign In", path: "/signin", pro: false },
-//       { name: "Sign Up", path: "/signup", pro: false },
-//     ],
-//   },
-// ];
 
 const statsItems: NavItem[] = [
   {
     icon: <PieChartIcon />,
-    name: "Graphiques",
+    name: "Interventions",
     subItems: [
-      { name: "Interventions", path: "/line-chart", pro: false },
-      { name: "Clients", path: "/bar-chart", pro: false },
+      { name: "Montants", path: "interventions-montants", pro: false },
+      { name: "Graphique", path: "interventions-graphique", pro: false },
     ],
   },
-  // {
-  //   icon: <BoxCubeIcon />,
-  //   name: "UI Elements",
-  //   subItems: [
-  //     { name: "Alerts", path: "/alerts", pro: false },
-  //     { name: "Avatar", path: "/avatars", pro: false },
-  //     { name: "Badge", path: "/badge", pro: false },
-  //     { name: "Buttons", path: "/buttons", pro: false },
-  //     { name: "Images", path: "/images", pro: false },
-  //     { name: "Videos", path: "/videos", pro: false },
-  //   ],
-  // },
-  // {
-  //   icon: <PlugInIcon />,
-  //   name: "Authentication",
-  //   subItems: [
-  //     { name: "Sign In", path: "/signin", pro: false },
-  //     { name: "Sign Up", path: "/signup", pro: false },
-  //   ],
-  // },
+  {
+    icon: <PieChartIcon />,
+    name: "Clients",
+    subItems: [
+      { name: "Nombre", path: "clients-nombre", pro: false },
+      // { name: "Clients", path: "/clients-stats", pro: false },
+    ],
+  },
 ];
 
 const synchronisationItems: NavItem[] = [
@@ -177,28 +65,8 @@ const synchronisationItems: NavItem[] = [
     icon: <PlugInIcon />,
     // icon: <PaperPlaneIcon />,
     name: "Synchroniser",
-    path: "error-404"
+    path: "/sync"
   },
-  // {
-  //   icon: <BoxCubeIcon />,
-  //   name: "UI Elements",
-  //   subItems: [
-  //     { name: "Alerts", path: "/alerts", pro: false },
-  //     { name: "Avatar", path: "/avatars", pro: false },
-  //     { name: "Badge", path: "/badge", pro: false },
-  //     { name: "Buttons", path: "/buttons", pro: false },
-  //     { name: "Images", path: "/images", pro: false },
-  //     { name: "Videos", path: "/videos", pro: false },
-  //   ],
-  // },
-  // {
-  //   icon: <PlugInIcon />,
-  //   name: "Authentication",
-  //   subItems: [
-  //     { name: "Sign In", path: "/signin", pro: false },
-  //     { name: "Sign Up", path: "/signup", pro: false },
-  //   ],
-  // },
 ];
 
 const AppSidebar: React.FC = () => {

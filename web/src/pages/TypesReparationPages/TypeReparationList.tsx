@@ -24,15 +24,15 @@ export default function TypeReparationList() {
     const {
         data: typeReparations = [],
         isLoading,
-        isError    } = useQuery({
-        queryKey: ['types-reparation'],
-        queryFn: async () => {
-            const data = await typeReparationService.getAll();
-            const items = (data as any).data || data;
-            return Array.isArray(items) ? items : [];
-        },
-        staleTime: 1000 * 60 * 5, // Cache de 5 minutes
-    });
+        isError } = useQuery({
+            queryKey: ['types-reparation'],
+            queryFn: async () => {
+                const data = await typeReparationService.getAll();
+                const items = (data as any).data || data;
+                return Array.isArray(items) ? items : [];
+            },
+            staleTime: 1000 * 60 * 5, // Cache de 5 minutes
+        });
 
     // 2. MUTATION : Création/Édition
     const saveMutation = useMutation({
@@ -110,16 +110,17 @@ export default function TypeReparationList() {
                 title="Types de Réparation"
                 description="Gestion des types de réparation"
             />
-            <PageBreadcrumb pageTitle="Types de Réparation" />
+            <PageBreadcrumb pageTitle="Types de réparation" />
 
             <div className="space-y-6">
                 <ComponentCard
-                    title="Liste des Types de Réparation"
+                    title="Liste des types de réparation"
                     headerRight={
                         <div className="flex gap-2">
                             <button
                                 disabled={syncMutation.isPending}
                                 onClick={handleSync}
+                                // className="inline-flex items-center rounded-md bg-brand-500 px-4 py-2 text-white disabled:opacity-60"
                                 className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-brand-500 disabled:bg-brand-400 rounded-lg hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 "
                             >
                                 {syncMutation.isPending ?
@@ -136,12 +137,13 @@ export default function TypeReparationList() {
                             <button
                                 disabled={saveMutation.isPending && !selectedTypeReparation?.id}
                                 onClick={handleCreate}
+                                // className="inline-flex items-center rounded-md bg-brand-500 px-4 py-2 text-white disabled:opacity-60"
                                 className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-brand-500 disabled:bg-brand-400 rounded-lg hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
                             >
                                 {saveMutation.isPending && !selectedTypeReparation?.id ?
                                     (<>
                                         <div className="w-4 h-4 mr-2 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                                        Création...
+                                        Traitement...
                                     </>) :
                                     (<>
                                         <PlusIcon />

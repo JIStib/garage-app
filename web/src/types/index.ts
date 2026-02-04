@@ -20,7 +20,9 @@ export interface TypeReparation {
 export interface Utilisateur {
     id: number;
     identifiant: string;
+    mdp: string;
     id_utilisateur_role: number;
+    role: Role;
 }
 
 export interface ReparationDetail {
@@ -66,3 +68,31 @@ export interface ApiResponse<T> {
 //     total: number;
 //     per_page: number;
 // }
+
+export interface StatsMontantTotal {
+    total: number;
+    count: number;
+}
+
+export interface Periode {
+    du: Date;
+    au: Date;
+}
+
+export interface StatJournalier {
+    jour: Date;
+    nb_reparations: number;
+    montant_total: number;
+}
+
+export interface StatsJournalier {
+    statut_filtre: string;
+    periode: Periode;
+    stats: StatJournalier[];
+}
+
+export interface StatsJournalierFormData {
+    statut: string;
+    date_debut: Date;
+    date_fin: Date;
+}

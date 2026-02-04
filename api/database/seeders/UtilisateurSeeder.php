@@ -14,7 +14,7 @@ class UtilisateurSeeder extends Seeder
     public function run(): void
     {
         Utilisateur::create([
-            'identifiant' => 'gg',
+            'identifiant' => 'Gg',
             'mdp' => 'gg',
             'id_utilisateur_role' => 1
         ]);
