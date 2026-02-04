@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 import PageMeta from "../../components/common/PageMeta";
 import ComponentCard from "../../components/common/ComponentCard";
-import ConfirmationModal from "../../components/common/ConfirmationModal";
 import {
     Table,
     TableBody,
@@ -11,125 +9,51 @@ import {
     TableRow,
 } from "../../components/ui/table";
 import reparationService from "../../services/reparationService";
-import type { Reparation } from "../../types";
-import { TimeIcon } from "../../icons";
+import type { Reparation, ReparationDetail, StatusHistory } from "../../types";
 import { Link, useParams } from "react-router";
+
+import { useQuery } from "@tanstack/react-query";
 
 export default function ReparationDetails() {
     const { id } = useParams();
-    const [reparation, setReparation] = useState<Reparation | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
 
-    // Modal State
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedReparation, setSelectedReparation] = useState<Reparation | null>(null);
-
-    // Delete Modal State
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const [itemToDelete, setItemToDelete] = useState<Reparation | null>(null);
-    const [isDeleting, setIsDeleting] = useState(false);
-
-    useEffect(() => {
-        loadReparation();
-    }, []);
-
-    const loadReparation = async () => {
-        try {
-            setLoading(true);
-            setError(null);
-            const repairId = Number(id);
-            const data = await reparationService.getById(repairId);
-            // Handle potentially wrapped data
-            const item = (data as any).data || data;
-            setReparation(item ? item : null);
-        } catch (err) {
-            setError("Erreur lors du chargement de la réparation");
-            console.error("Error loading réparation:", err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleCreate = () => {
-        setSelectedReparation(null);
-        setIsModalOpen(true);
-    };
-
-    // const handleEdit = (typeReparation: TypeReparation) => {
-    //     setSelectedReparation(typeReparation);
-    //     setIsModalOpen(true);
-    // };
-
-    // const handleSave = async (data: Omit<TypeReparation, "id"> | TypeReparation) => {
-    //     try {
-    //         if ('id' in data) {
-    //             await reparationService.update(data.id, data);
-    //         } else {
-    //             await reparationService.create(data);
-    //         }
-    //         await loadReparations();
-    //         setIsModalOpen(false);
-    //     } catch (err) {
-    //         console.error("Error saving:", err);
-    //         throw err;
-    //     }
-    // };
-
-    const openDeleteModal = (item: Reparation) => {
-        setItemToDelete(item);
-        setIsDeleteModalOpen(true);
-    };
-
-    const confirmDelete = async () => {
-        if (!itemToDelete) return;
-
-        try {
-            setIsDeleting(true);
-            await reparationService.delete(itemToDelete.id);
-            console.log(itemToDelete);
-
-            await loadReparation();
-            setIsDeleteModalOpen(false);
-            setItemToDelete(null);
-        } catch (err) {
-            alert("Erreur lors de la suppression"); // Could use a toast here ideally
-            console.error("Error deleting type reparation:", err);
-        } finally {
-            setIsDeleting(false);
-        }
-    };
+    // 1. LECTURE : Se recharge automatiquement si 'id' change dans l'URL
+    const {
+        data: reparation = null,
+        isLoading,
+        isError
+    } = useQuery({
+        queryKey: ['reparations', id], // L'ID ici rend la requête dynamique
+        queryFn: async () => {
+            if (!id) return null;
+            const data = await reparationService.getById(id);
+            const item: Reparation = (data as any).data || data;
+            return item || null;
+        },
+        enabled: !!id, // Ne lance la requête que si l'ID existe
+    });
 
     return (
         <>
             <PageMeta
-                title={`Réparation ${!loading ? reparation?.id : ""}`}
-                description={`Réparation ${!loading ? reparation?.id : ""}`}
+                title={`Réparation ${!isLoading ? reparation?.id : ""}`}
+                description={`Réparation ${!isLoading ? reparation?.id : ""}`}
             />
-            <PageBreadcrumb pageTitle={`Réparation ${!loading ? reparation?.id : ""}`} />
+            <PageBreadcrumb previousText="Réparations" previousTo="/reparations" pageTitle={`Réparation ${!isLoading ? reparation?.id : ""}`} />
 
 
-            <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
+            <div className="grid grid-cols-1 gap-6 xl:grid-cols-1">
                 <div className="space-y-6">
                     <ComponentCard
-                        title={`Réparation ${!loading ? reparation?.id : ""}`}
-                    // headerRight={
-                    //     <button
-                    //         onClick={handleCreate}
-                    //         className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-brand-500 rounded-lg hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
-                    //     >
-                    //         <TimeIcon />
-                    //         Synchroniser
-                    //     </button>
-                    // }
+                        title={`Réparation ${!isLoading ? reparation?.id : ""}`}
                     >
-                        {loading ? (
+                        {isLoading ? (
                             <div className="flex items-center justify-center py-12">
                                 <div className="w-8 h-8 border-4 border-brand-500 border-t-transparent rounded-full animate-spin"></div>
                             </div>
-                        ) : error ? (
+                        ) : isError ? (
                             <div className="p-4 text-red-600 bg-red-50 rounded-lg dark:bg-red-900/20 dark:text-red-400">
-                                {error}
+                                {isError}
                             </div>
                         ) : reparation === null ? (
                             <div className="py-12 text-center text-gray-500 dark:text-gray-400">
@@ -141,17 +65,17 @@ export default function ReparationDetails() {
                                     <Table>
                                         <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
                                             <TableRow>
-                                                {/* <TableCell
-                                                    isHeader
-                                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                                                >
-                                                    ID
-                                                </TableCell> */}
                                                 <TableCell
                                                     isHeader
                                                     className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                                                 >
-                                                    Utilisateur
+                                                    ID
+                                                </TableCell>
+                                                <TableCell
+                                                    isHeader
+                                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                                                >
+                                                    Utilisateur firebase
                                                 </TableCell>
                                                 <TableCell
                                                     isHeader
@@ -182,22 +106,22 @@ export default function ReparationDetails() {
 
                                         <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
                                             <TableRow key={reparation.id}>
-                                                {/* <TableCell className="px-5 py-4 text-gray-800 text-start text-theme-sm dark:text-white/90">
-                                                    {reparation.id}
-                                                </TableCell> */}
                                                 <TableCell className="px-5 py-4 text-gray-800 text-start text-theme-sm dark:text-white/90">
-                                                    {reparation.utilisateur.identifiant}
+                                                    {reparation.id}
+                                                </TableCell>
+                                                <TableCell className="px-5 py-4 text-gray-800 text-start text-theme-sm dark:text-white/90">
+                                                    {reparation.id_utilisateur_firebase}
                                                 </TableCell>
                                                 <TableCell className="px-5 py-4 text-gray-800 text-start text-theme-sm dark:text-white/90">
                                                     {new Date(reparation.status_history[0].date).toLocaleDateString()}
                                                 </TableCell>
                                                 <TableCell className="px-5 py-4 text-gray-800 text-start text-theme-sm dark:text-white/90">
-                                                    {reparation.details.length} trucs à reparer
+                                                    {reparation.details.length} trucs à réparer
                                                 </TableCell>
                                                 <TableCell className="px-5 py-4 text-gray-800 text-start text-theme-sm dark:text-white/90">
                                                     {/* {typeReparation.prix}Ar */}
                                                     {/* Créé */}
-                                                    {reparation.status_history.length > 0 && reparation.status_history.reduce((latest, current) =>
+                                                    {reparation.status_history.length > 0 && reparation.status_history.reduce((latest: StatusHistory, current: StatusHistory) =>
                                                         new Date(current.date) > new Date(latest.date) ? current : latest
                                                     ).statut.nom}
                                                 </TableCell>
@@ -238,23 +162,14 @@ export default function ReparationDetails() {
                 <div className="space-y-6">
                     <ComponentCard
                         title="Détails"
-                    // headerRight={
-                    //     <button
-                    //         onClick={handleCreate}
-                    //         className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white transition-colors bg-brand-500 rounded-lg hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
-                    //     >
-                    //         <TimeIcon />
-                    //         Synchroniser
-                    //     </button>
-                    // }
                     >
-                        {loading ? (
+                        {isLoading ? (
                             <div className="flex items-center justify-center py-12">
                                 <div className="w-8 h-8 border-4 border-brand-500 border-t-transparent rounded-full animate-spin"></div>
                             </div>
-                        ) : error ? (
+                        ) : isError ? (
                             <div className="p-4 text-red-600 bg-red-50 rounded-lg dark:bg-red-900/20 dark:text-red-400">
-                                {error}
+                                {isError}
                             </div>
                         ) : reparation?.details.length === 0 ? (
                             <div className="py-12 text-center text-gray-500 dark:text-gray-400">
@@ -300,7 +215,7 @@ export default function ReparationDetails() {
                                         </TableHeader>
 
                                         <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-                                            {reparation?.details.map((detail) => (
+                                            {reparation?.details.map((detail: ReparationDetail) => (
                                                 <TableRow key={detail.id}>
                                                     <TableCell className="px-5 py-4 text-gray-800 text-start text-theme-sm dark:text-white/90">
                                                         {detail.id}
@@ -347,23 +262,6 @@ export default function ReparationDetails() {
                     </ComponentCard>
                 </div>
             </div>
-
-            {/* <TypeReparationForm
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                onSave={handleSave}
-                initialData={selectedReparation}
-            /> */}
-
-            <ConfirmationModal
-                isOpen={isDeleteModalOpen}
-                onClose={() => setIsDeleteModalOpen(false)}
-                onConfirm={confirmDelete}
-                title="Supprimer la réparation"
-                // message={`Supprimer "${itemToDelete?.nom}" ?`}
-                // confirmText="Valider"
-                isLoading={isDeleting}
-            />
         </>
     );
 }

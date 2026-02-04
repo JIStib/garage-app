@@ -18,12 +18,9 @@ import Blank from "./pages/Blank";
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
-// import TypeReparationList from "./pages/TypesReparationPages/TypeReparationList";
-import TypeReparationList from "./pages/TypesReparationPages/TypeReparationListUseQueryVersion";
-// import ReparationList from "./pages/ReparationsPages/ReparationList";
-import ReparationList from "./pages/ReparationsPages/ReparationListUseQueryVersion";
-// import ReparationDetails from "./pages/ReparationsPages/ReparationDetails";
-import ReparationDetails from "./pages/ReparationsPages/ReparationDetailsUseQueryVersion";
+import TypeReparationList from "./pages/TypesReparationPages/TypeReparationList";
+import ReparationList from "./pages/ReparationsPages/ReparationList";
+import ReparationDetails from "./pages/ReparationsPages/ReparationDetails";
 
 export default function App() {
   return (
