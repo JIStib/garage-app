@@ -21,7 +21,7 @@ export default function TypeReparationForm({
     // Initialisation avec les nouveaux champs
     const [formData, setFormData] = useState({
         nom: "",
-        duree: "", // On utilise des strings pour faciliter la saisie dans les inputs
+        duree: "",
         prix: "",
     });
     const [submitting, setSubmitting] = useState(false);
@@ -59,7 +59,6 @@ export default function TypeReparationForm({
             setSubmitting(true);
             setError(null);
 
-            // Conversion des données pour correspondre au format attendu par Laravel
             const payload = {
                 nom: formData.nom,
                 duree: parseInt(formData.duree, 10),
@@ -105,8 +104,6 @@ export default function TypeReparationForm({
                                 {error}
                             </div>
                         )}
-
-                        {/* Champ NOM */}
                         <div>
                             <label htmlFor="nom" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 Nom du Type
@@ -122,8 +119,6 @@ export default function TypeReparationForm({
                                 placeholder="Ex: Vidange"
                             />
                         </div>
-
-                        {/* Champ DUREE */}
                         <div>
                             <label htmlFor="duree" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 Durée estimée (secondes)
@@ -140,8 +135,6 @@ export default function TypeReparationForm({
                                 placeholder="Ex: 60"
                             />
                         </div>
-
-                        {/* Champ PRIX */}
                         <div>
                             <label htmlFor="prix" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 Prix (Ar)
@@ -161,28 +154,9 @@ export default function TypeReparationForm({
                         </div>
 
                         <div className="flex items-center justify-end gap-3 pt-4">
-                            {/* <button
-                                type="button"
-                                onClick={onClose}
-                                className="px-6 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300"
-                            >
-                                Annuler
-                            </button> */}
                             <Button disabled={submitting} size="sm" variant="outline" onClick={onClose}>
                                 Annuler
                             </Button>
-                            {/* <button
-                                type="submit"
-                                disabled={submitting}
-                                className="inline-flex items-center justify-center px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50"
-                            >
-                                {submitting ? ( 
-                                    <>
-                                        <div className="w-4 h-4 mr-2 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                                        Traitement...
-                                    </>
-                                ) : (isEditMode ? "Mettre à jour" : "Créer")}
-                            </button> */}
                             <Button size="sm" variant="primary" disabled={submitting}>
                                 {submitting ? ( 
                                     <>
