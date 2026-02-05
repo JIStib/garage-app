@@ -2,173 +2,167 @@ import { useEffect, useState } from "react";
 import { Modal } from "../../components/ui/modal";
 import type { TypeReparation } from "../../types";
 import Button from "../../components/ui/button/Button";
+import Input from "../../components/form/input/InputField";
+import Label from "../../components/form/Label";
 
 interface TypeReparationFormProps {
-    isOpen: boolean;
-    onClose: () => void;
-    onSave: (data: Omit<TypeReparation, "id"> | TypeReparation) => Promise<void>;
-    initialData?: TypeReparation | null;
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (data: Omit<TypeReparation, "id"> | TypeReparation) => Promise<void>;
+  initialData?: TypeReparation | null;
 }
 
 export default function TypeReparationForm({
-    isOpen,
-    onClose,
-    onSave,
-    initialData,
+  isOpen,
+  onClose,
+  onSave,
+  initialData,
 }: TypeReparationFormProps) {
-    const isEditMode = !!initialData;
+  const isEditMode = !!initialData;
 
-    // Initialisation avec les nouveaux champs
-    const [formData, setFormData] = useState({
-        nom: "",
-        duree: "",
-        prix: "",
-    });
-    const [submitting, setSubmitting] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    nom: "",
+    duree: "",
+    prix: "",
+  });
 
-    useEffect(() => {
-        if (isOpen) {
-            if (initialData) {
-                setFormData({
-                    nom: initialData.nom || "",
-                    duree: initialData.duree?.toString() || "",
-                    prix: initialData.prix?.toString() || "",
-                });
-            } else {
-                setFormData({
-                    nom: "",
-                    duree: "",
-                    prix: "",
-                });
-            }
-            setError(null);
-        }
-    }, [isOpen, initialData]);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+  useEffect(() => {
+    if (!isOpen) return;
 
-        // Validation basique
-        if (!formData.nom.trim() || !formData.duree || !formData.prix) {
-            setError("Tous les champs sont obligatoires");
-            return;
-        }
+    if (initialData) {
+      setFormData({
+        nom: initialData.nom ?? "",
+        duree: initialData.duree?.toString() ?? "",
+        prix: initialData.prix?.toString() ?? "",
+      });
+    } else {
+      setFormData({ nom: "", duree: "", prix: "" });
+    }
 
-        try {
-            setSubmitting(true);
-            setError(null);
+    setError(null);
+  }, [isOpen, initialData]);
 
-            const payload = {
-                nom: formData.nom,
-                duree: parseInt(formData.duree, 10),
-                prix: parseFloat(formData.prix),
-            };
+  const handleChange = (name: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setError(null);
+  };
 
-            if (isEditMode && initialData) {
-                await onSave({ ...initialData, ...payload });
-            } else {
-                await onSave(payload);
-            }
-            onClose();
-        } catch (err) {
-            setError("Erreur lors de l'enregistrement");
-            console.error("Error saving type reparation:", err);
-        } finally {
-            setSubmitting(false);
-        }
-    };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-        setError(null);
-    };
+    if (!formData.nom || !formData.duree || !formData.prix) {
+      setError("Tous les champs sont obligatoires");
+      return;
+    }
 
-    return (
-        <Modal isOpen={isOpen} onClose={onClose} className="max-w-[500px] m-4">
-            <div className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
-                <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                        {isEditMode ? "Modifier" : "Nouveau"} Type de Réparation
-                    </h3>
-                </div>
+    try {
+      setSubmitting(true);
 
-                <form onSubmit={handleSubmit}>
-                    <div className="space-y-4">
-                        {error && (
-                            <div className="p-4 text-red-600 bg-red-50 rounded-lg dark:bg-red-900/20 dark:text-red-400">
-                                {error}
-                            </div>
-                        )}
-                        <div>
-                            <label htmlFor="nom" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Nom du Type
-                            </label>
-                            <input
-                                type="text"
-                                id="nom"
-                                name="nom"
-                                value={formData.nom}
-                                onChange={handleChange}
-                                required
-                                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                                placeholder="Ex: Vidange"
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="duree" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Durée estimée (secondes)
-                            </label>
-                            <input
-                                type="number"
-                                id="duree"
-                                name="duree"
-                                value={formData.duree}
-                                onChange={handleChange}
-                                required
-                                min="1"
-                                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                                placeholder="Ex: 60"
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="prix" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Prix (Ar)
-                            </label>
-                            <input
-                                type="number"
-                                step="0.01"
-                                id="prix"
-                                name="prix"
-                                value={formData.prix}
-                                onChange={handleChange}
-                                required
-                                min="0"
-                                className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                                placeholder="Ex: 49.99"
-                            />
-                        </div>
+      const payload = {
+        nom: formData.nom,
+        duree: Number(formData.duree),
+        prix: Number(formData.prix),
+      };
 
-                        <div className="flex items-center justify-end gap-3 pt-4">
-                            <Button disabled={submitting} size="sm" variant="outline" onClick={onClose}>
-                                Annuler
-                            </Button>
-                            <Button size="sm" variant="primary" disabled={submitting}>
-                                {submitting ? ( 
-                                    <>
-                                        <div className="w-4 h-4 mr-2 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                                        Traitement...
-                                    </>
-                                ) : (isEditMode ? "Mettre à jour" : "Créer")}
-                            </Button>
-                        </div>
-                    </div>
-                </form>
+      if (isEditMode && initialData) {
+        await onSave({ ...initialData, ...payload });
+      } else {
+        await onSave(payload);
+      }
+
+      onClose();
+    } catch (err) {
+      console.error(err);
+      setError("Erreur lors de l'enregistrement");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} className="max-w-[700px] m-4">
+      <div className="no-scrollbar relative w-full max-w-[700px] overflow-y-auto rounded-3xl bg-white p-4 dark:bg-gray-900 lg:p-11">
+        
+        {/* Header */}
+        <div className="px-2 pr-14">
+          <h4 className="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
+            {isEditMode ? "Modifier" : "Nouveau"} Type de Réparation
+          </h4>
+          <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
+            Renseignez les informations du type de réparation.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="flex flex-col">
+          
+          {/* Body scrollable */}
+          <div className="custom-scrollbar px-2 pb-3">
+            {error && (
+              <div className="mb-4 rounded-lg bg-red-50 p-4 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400">
+                {error}
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
+              <div className="lg:col-span-2">
+                <Label>Nom du type</Label>
+                <Input
+                  type="text"
+                  value={formData.nom}
+                  onChange={(e) => handleChange("nom", e.target.value)}
+                  placeholder="Ex : Vidange"
+                />
+              </div>
+
+              <div>
+                <Label>Durée estimée (secondes)</Label>
+                <Input
+                  type="number"
+                  min="1"
+                  value={formData.duree}
+                  onChange={(e) => handleChange("duree", e.target.value)}
+                  placeholder="Ex : 60"
+                />
+              </div>
+
+              <div>
+                <Label>Prix (Ar)</Label>
+                <Input
+                  type="number"
+                  min="0"
+                  step={0.01}
+                  value={formData.prix}
+                  onChange={(e) => handleChange("prix", e.target.value)}
+                  placeholder="Ex : 50 000"
+                />
+              </div>
             </div>
-        </Modal>
-    );
+          </div>
+
+          {/* Footer */}
+          <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">
+            <Button size="sm" variant="outline" onClick={onClose}>
+              Annuler
+            </Button>
+
+            <Button size="sm" variant="primary" disabled={submitting}>
+              {submitting ? (
+                <>
+                  <div className="w-4 h-4 mr-2 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                  Traitement...
+                </>
+              ) : isEditMode ? (
+                "Mettre à jour"
+              ) : (
+                "Créer"
+              )}
+            </Button>
+          </div>
+        </form>
+      </div>
+    </Modal>
+  );
 }

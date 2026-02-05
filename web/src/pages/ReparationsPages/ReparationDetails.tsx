@@ -113,7 +113,13 @@ export default function ReparationDetails() {
                                                     {reparation.id_utilisateur_firebase}
                                                 </TableCell>
                                                 <TableCell className="px-5 py-4 text-gray-800 text-start text-theme-sm dark:text-white/90">
-                                                    {new Date(reparation.status_history[0].date).toLocaleDateString()}
+                                                    {/* {new Date(reparation.status_history[0].date).toLocaleDateString()} */}
+                                                    {
+                                                        new Date(reparation.status_history[0].date).toLocaleString("fr-FR", {
+                                                            dateStyle: "short",
+                                                            timeStyle: "short",
+                                                        })
+                                                    }
                                                 </TableCell>
                                                 <TableCell className="px-5 py-4 text-gray-800 text-start text-theme-sm dark:text-white/90">
                                                     {reparation.details.length} trucs à réparer

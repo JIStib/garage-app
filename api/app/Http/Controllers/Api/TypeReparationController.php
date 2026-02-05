@@ -21,7 +21,8 @@ class TypeReparationController extends Controller
         // $types = TypeReparation::paginate(6);
 
         // return response()->json($types, Response::HTTP_OK);
-        return response()->json(TypeReparation::all(), Response::HTTP_OK);
+        // return response()->json(TypeReparation::all(), Response::HTTP_OK);
+        return response()->json(TypeReparation::orderBy('id')->get(), Response::HTTP_OK);
         // return TypeReparation::with(['reparation', 'typeReparation'])->get();
     }
 
